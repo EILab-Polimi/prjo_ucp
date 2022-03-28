@@ -1,0 +1,159 @@
+{#
+/**
+ * @file
+ * Theme override for a 'form' element.
+ *
+ * Available variables
+ * - attributes: A list of HTML attributes for the wrapper element.
+ * - children: The child elements of the form.
+ *
+ * @see template_preprocess_form()
+ */
+#}
+
+{# {{ form }} #}
+
+{# {{ form|without('advanced', 'footer', 'actions') }} #}
+
+{{ form.form_build_id }}
+{{ form.form_token }}
+{{ form.form_id }}
+
+
+{# {{ kint(form) }} #}
+{# {{ kint(form.field_ws_ref) }} #}
+
+<div class="row mb-4">
+  {% if form.title.widget.0.value['#default_value'] %}
+  <div class="col">
+    <h3{{ title_attributes.addClass(['text-dark', 'page-title']) }}> {{ title_icon }} {{ form.title.widget.0.value['#default_value'] }} - Edit</h3>
+  </div>
+  {% endif %}
+  <div class="col float-right">
+      {{ form.actions }}
+  </div>
+</div>
+
+
+
+<div class="row mb-3">
+  <div class="col">
+
+      <div class="row">
+          <div id="water-loop" class="col">
+
+            <div class="card shadow mb-3">
+              <div class="card-body">
+
+                <div class="form-row">
+                  <div class="col-4">
+                    {{ form.title }}
+                  </div>
+                  <!-- Quantity bars && distance -->
+                  <div class="col-3">
+                    <div id="wd">
+                      <h4 class="small font-weight-bold">Water demand satisfied:&nbsp;<span class="float-right">0%</span></h4>
+                      <div class="progress progress-sm mb-3">
+                        <div class="progress-bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span class="sr-only"></span></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-3">
+                    <div id="wqg">
+                      <h4 class="small font-weight-bold">Water quality reached:&nbsp;<span class="float-right">0%</span></h4>
+                      <div class="progress progress-sm mb-3">
+                        <div class="progress-bar bg-info" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span class="sr-only"></span></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-2">
+                    <h4 class="small font-weight-bold">Distance:<span id="distance" class="float-right"></span></h4>
+                  </div>
+
+                </div>
+
+                <div class="card shadow">
+                  <div class="card-body">
+                    <div class="row">
+
+                      <!-- Map with buttons -->
+                      <div class="col-8">
+                        <!-- <div class="btn-group">
+                            <button type="button" id="all" class="btn btn-outline-secondary active">All Water Streams</button>
+                            <button type="button" id="others" class="btn btn-outline-primary">Others Water Streams</button>
+                            <button type="button" id="mine" class="btn btn-outline-success">Mine Water Streams</button>
+                        </div> -->
+                        <div id="selectmap" style="height:45vh;"></div>
+                      </div>
+                      <!-- Selected Elements column -->
+                      <div class="col-4">
+                        <div class="form-row">
+                          <div class="col">
+                            <!-- <div class="card shadow form-group p-1 "> -->
+                              <div>
+                              <table data-drupal-selector="edit-field-ws-ref" id="edit-field-ws-ref" class="responsive-enabled table table-sm" data-striping="1">
+                                <p class="font-weight-bold mb-0" style="color: #5A5C69;">Selected Water Streams</p>
+                                <tbody>
+                                  <tr class="small" id="ws_empty"><td style="border: none;"><input type="hidden" id="ws_id" name="ws_id" value="0"><button class="btn btn-wl-disabled btn-block" disabled><span class="float-left" style="color:white;"><i class="fas fa-water"></i></span></button></td></tr>
+                                </tbody>
+                              </table>
+                              </div>
+
+                              <div  style="display:block; height: 20vh; overflow-y: auto; position: relative; width:100%;">
+                                <table data-drupal-selector="edit-field-tp-ref" id="edit-field-tp-ref" class="responsive-enabled table table-sm" data-striping="1">
+                                  <p class="font-weight-bold mb-0" style="color: #5A5C69;">Proposed Technologies</p>
+                                  <tbody>
+                                  </tbody>
+                                </table>
+                              </div>
+
+                              <div class="align-self-end">
+                              <table data-drupal-selector="edit-field-wr-ref" id="edit-field-wr-ref" class="responsive-enabled table table-sm" data-striping="1">
+                                <p class="font-weight-bold mb-0" style="color: #5A5C69;">Selected Water Demands</p>
+                                <tbody>
+                                  <tr class="small" id="wr_empty"><td style="border: none;"><input type="hidden" id="wr_id" name="wr_id" value="0"><button class="btn btn-wl-disabled btn-block" disabled><span class="float-left" style="color:white;"> <i class="fas fa-hand-holding-water"></i></span></button></td></tr>
+                                </tbody>
+                              </table>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!-- Bottom row with analysis -->
+                    <div class="row">
+                      <div class="col">
+                        <div id="wl_status" class="pt-3" style="display: none;">
+                          <p class="font-weight-bold mb-0" style="color: #5A5C69;">Law limits for Application field</p>
+                          <div id="wq"></div>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div id="wl_status_noSpec" class="pt-3" style="display: none;">
+                          <p class="font-weight-bold mb-0" style="color: #5A5C69; margin-left: -0.75rem;">Other parameters</p>
+                          <div class="row">
+                            <div class="col">
+                              <div id="wq_noSpec"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+      </div>
+
+  </div>
+</div>
+
+{{ form.footer }}

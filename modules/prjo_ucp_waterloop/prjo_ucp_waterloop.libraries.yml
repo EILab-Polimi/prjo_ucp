@@ -1,0 +1,100 @@
+
+notifications:
+  version: 1.x
+  js:
+    js/notifications.js: {}
+  css:
+    component:
+      css/override.css: {}
+
+hide:
+  version: 1.x
+  js:
+    js/hide.js: {}
+
+multistep:
+  version: 1.x
+  js:
+    js/multistep.js: {}
+  css:
+    component:
+      css/override.css: {}
+  # dependencies:
+  #    - core/drupal.ajax
+
+# multistep_submit.integration:
+#   version: VERSION
+#   js:
+#     js/jquery.validate.js: {}
+#     js/script.js: {}
+#   dependencies:
+#     - core/jquery
+#     - core/drupal
+#     - core/drupalSettings
+#     - multistep_submit/jquery_steps
+
+jquery_steps:
+  remote: https://github.com/rstaib/jquery-steps
+  version: VERSION
+  license:
+    name: MIT
+    url: https://github.com/rstaib/jquery-steps/
+    gpl-compatible: true
+  js:
+    /libraries/jquery-steps/lib/modernizr-2.6.2.min.js: {}
+    /libraries/jquery-steps/lib/jquery.cookie-1.3.1.js: {}
+    /libraries/jquery-steps/build/jquery.steps.js: {}
+  css:
+    component:
+      /libraries/jquery-steps/demo/css/jquery.steps.css: {}
+  dependencies:
+    - core/jquery
+
+jquery_validation:
+  remote: https://github.com/jquery-validation/jquery-validation
+  version: VERSION
+  license:
+    name: MIT
+    url: https://github.com/jquery-validation/jquery-validation
+    gpl-compatible: true
+  js:
+    /libraries/jquery-validation/dist/jquery.validate.min.js: {}
+
+leaflet:
+  version: 1.7.1
+  remote: https://github.com/Leaflet/Leaflet
+  license:
+    name: MIT
+    url: https://github.com/Leaflet/Leaflet/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/leaflet/leaflet.js: {}
+  css:
+    theme:
+      /libraries/leaflet/leaflet.css: {}
+
+mathjs:
+  version: 9.3.2
+  js:
+    /libraries/mathjs/math.js: {}
+
+
+wlLeafletCustom:
+  version: 1.x
+  js:
+    # js/wl_appl_fields.js: {}
+    js/LIcons.js: {}
+    js/wl_map.js: {}
+    js/ajax_submit.js: {}
+  css:
+    theme:
+      css/wl_map.css: {}
+
+wlViewMap:
+  version: 1.x
+  js:
+    js/LIcons.js: {}
+    js/wlViewMap.js: {}
+  css:
+    theme:
+      css/wl_map.css: {}

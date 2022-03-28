@@ -1,0 +1,52 @@
+prjo_ucp_analysis.autocomplete.articles:
+  path: '/admin/prjo_ucp_analysis/autocomplete/articles'
+  defaults:
+    _controller: '\Drupal\prjo_ucp_analysis\Controller\AnalysisAutoCompleteController::handleAutocomplete'
+    _format: json
+  requirements:
+    _permission: 'access content'
+
+prjo_ucp_analysis.json_api_i18n:
+  path: '/api/json/i18n'
+  defaults:
+    _controller: 'Drupal\prjo_ucp_analysis\Controller\i18nJsonApiController::renderApi'
+    _title: 'JSON api'
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
+
+prjo_ucp_analysis.json_api_uom:
+  path: '/api/json/uom'
+  defaults:
+    _controller: 'Drupal\prjo_ucp_analysis\Controller\uomJsonApiController::renderApi'
+    _title: 'JSON api'
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
+
+# prjo_ucp_analysis.json_api_ucum_lhc:
+#   path: '/api/json/ucum'
+#   defaults:
+#     _controller: 'Drupal\prjo_ucp_analysis\Controller\ucumLhcJsonApiController::renderApi'
+#     _title: 'JSON api'
+#   methods:  [GET]
+#   requirements:
+#     _access: 'TRUE'
+
+prjo_ucp_analysis.json_api_observed_properties:
+  path: '/api/json/obsp'
+  defaults:
+    _controller: 'Drupal\prjo_ucp_analysis\Controller\OPJsonApiController::renderApi'
+    _title: 'JSON api'
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
+
+prjo_ucp_analysis.json_api_range:
+  path: '/api/json/range'
+  defaults:
+    _controller: 'Drupal\prjo_ucp_analysis\Controller\rangeJsonApiController::renderApi'
+    _title: 'JSON api'
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'

@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Technologies domains'
+vid: technologies_domains
+description: ''
+weight: 0

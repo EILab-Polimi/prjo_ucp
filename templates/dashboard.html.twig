@@ -1,0 +1,90 @@
+
+<div class="row">
+  <div class="container-fluid">
+
+    {# {{ dump(cards) }} #}
+    <h3 class="text-primary"> {{ username }} dashboard</h3>
+    <div class="row">
+          <div class="col mb-4">
+              <div class="card shadow border-left-primary py-2">
+                  <div class="card-body">
+                      <div class="row align-items-center no-gutters">
+                          <div class="col mr-2">
+                              <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>WATER Streams</span></div>
+                              <div class="text-dark font-weight-bold mb-0"><span>All : {{ cards.water_offer.all }}</span></div>
+                              <div class="text-dark font-weight-bold mb-0"><span>Published by me : {{ cards.water_offer.mine }}</span></div>
+                          </div>
+                          <div class="col-auto"><i class="fas fa-water fa-2x text-gray-300"></i></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col mb-4">
+              <div class="card shadow border-left-success py-2">
+                  <div class="card-body">
+                      <div class="row align-items-center no-gutters">
+                          <div class="col mr-2">
+                              <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Water Demands</span></div>
+                              <div class="text-dark font-weight-bold mb-0"><span>All : {{ cards.water_request.all }}</span></div>
+                              <div class="text-dark font-weight-bold mb-0"><span>Published by me : {{ cards.water_request.mine }}</span></div>
+                          </div>
+                          <div class="col-auto"><i class="fas fa-hand-holding-water fa-2x text-gray-300"></i></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col mb-4">
+              <div class="card shadow border-left-info py-2">
+                  <div class="card-body">
+                      <div class="row align-items-center no-gutters">
+                          <div class="col mr-2">
+                              <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>TECHNOLOGY PROducts</span></div>
+                              <div class="text-dark font-weight-bold mb-0"><span>All : {{ cards.technology_product.all }}</span></div>
+                              <div class="text-dark font-weight-bold mb-0"><span>Published by me : {{ cards.technology_product.mine }}</span></div>
+                          </div>
+                          <div class="col-auto"><i class="fab fa-themeco fa-2x text-gray-300"></i></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+    </div>
+
+    <!-- DASHBOARD MAP -->
+    <div class="row mb-3">
+      <div class="col">
+        <div id="map" style="min-width: 150px; height: 50vh"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="card shadow mb-3">
+          <div class="card-header py-3">
+            <p class="text-primary m-0 font-weight-bold">My contents</p>
+          </div>
+          <div class="card-body">
+            {% set view = drupal_view_result('water_content_per_user', 'default')|length %}
+            {% if view > 0 %}
+              {{ drupal_view('water_content_per_user', 'default') }}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="card shadow mb-3">
+          <div class="card-header py-3">
+            <p class="text-primary m-0 font-weight-bold">Waterloops</p>
+          </div>
+          <div class="card-body">
+              {{ wl }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

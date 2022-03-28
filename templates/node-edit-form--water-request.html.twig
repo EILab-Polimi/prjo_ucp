@@ -1,0 +1,110 @@
+{#
+/**
+ * @file
+ * Theme override for a 'form' element.
+ *
+ * Available variables
+ * - attributes: A list of HTML attributes for the wrapper element.
+ * - children: The child elements of the form.
+ *
+ * @see template_preprocess_form()
+ */
+#}
+
+{# {{ form }} #}
+
+{# {{ form|without('advanced', 'footer', 'actions') }} #}
+
+{{ form.form_build_id }}
+{{ form.form_token }}
+{{ form.form_id }}
+
+
+{# {{ kint(form) }} #}
+
+<div class="row mb-3">
+  <div class="col-lg-8">
+      <div class="row">
+          <div class="col">
+              <div class="card shadow mb-3">
+                  <div class="card-header py-3">
+                      <p class="text-primary m-0 font-weight-bold">Water Request</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                              {{ form.title }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                              <!-- <label for="username"><strong>Estimated Flow m3/day needed *</strong></label>
+                              <input class="form-control" type="text" placeholder="flow in m3/day" name="username"> -->
+                              {{ form.field_wr_flow }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                              {{ form.field_application_field_txn }}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="form-row">
+                        <div class="col-xl-12">
+                            <div class="form-group"><label for="first_name"><strong>Other details *</strong></label><input class="form-control" type="text" placeholder="Specify other application field and known details to help us to qualify your needs" name="Note"></div>
+                        </div>
+                    </div> -->
+
+                  </div>
+              </div>
+              <div class="card shadow">
+                  <div class="card-header py-3">
+                      <p class="text-primary m-0 font-weight-bold">Water request position</p>
+                      <!-- <iframe allowfullscreen="" frameborder="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDqvl6z7CzA8XWMaCa1GX5jI0EyKpo9PMI&amp;q=Lombardia%2C+Piazza+Leonardo+da+Vinci%2C+32&amp;zoom=8" data-toggle="tooltip" data-bs-tooltip="" data-placement="bottom" width="100%" height="400" title="" data-original-title="Select position"></iframe> -->
+                      {{ form.field_water_stream_position }}
+                  </div>
+                  <div class="card-body">
+                    {{ form.field_wr_address }}
+                  </div>
+                  <div class="card-header py-3">
+                      <p class="text-primary m-0 font-weight-bold">Additional information</p>
+                      <div class="form-group">
+                        <label for="signature"><strong>Describe in a few lines your activity and how the&nbsp;water flow will be applied to your activity</strong><br></label>
+                        {{ form.field_additional_info }}
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="col-lg-4">
+      <div class="card shadow mb-4">
+          <div class="card-header py-3">
+              <h6 class="text-primary font-weight-bold m-0">Target water quality parameters for the selected application field</h6>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <!-- <th colspan="2">The table header</th> -->
+                    <th>Observed property</th>
+                    <th>UOM</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                  </tr>
+              </thead>
+              <tbody id="an_spec">
+              </tbody>
+            </table>
+          </div>
+      </div>
+  </div>
+  <div class="col-xl-12">
+    {{ form.footer }}
+    {{ form.actions }}
+  </div>
+</div>

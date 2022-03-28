@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.water_offer.body
+    - field.field.node.water_offer.field_analysis_values
+    - node.type.water_offer
+  module:
+    - text
+    - user
+id: node.water_offer.teaser
+targetEntityType: node
+bundle: water_offer
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  flag_water:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_analysis_values: true

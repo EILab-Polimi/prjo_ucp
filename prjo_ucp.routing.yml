@@ -1,0 +1,7 @@
+prjo_ucp.dashboard:
+  path: '/dashboard'
+  defaults:
+    _controller: '\Drupal\prjo_ucp\Controller\DashboardController::dashboard'
+    _title: 'Dashboard'
+  requirements:
+    _role: 'authenticated'

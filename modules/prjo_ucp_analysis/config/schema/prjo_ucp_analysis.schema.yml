@@ -1,0 +1,38 @@
+field.widget.settings.analysis_field_widget:
+  type: mapping
+  label: 'Analysis widget settings'
+  mapping:
+    showJson:
+      type: boolean
+    schema:
+      type: field.value.json
+      label: 'json-editor schema'
+    show_errors:
+      type: string    
+    disable_array_add:
+      type: boolean
+    disable_array_delete:
+      type: boolean
+    disable_array_delete_all_rows:
+      type: boolean
+    disable_array_delete_last_row:
+      type: boolean
+    disable_array_reorder:
+      type: boolean
+    enable_array_copy:
+      type: boolean
+    disable_collapse:
+      type: boolean
+    object_layout:
+      type: string
+      label: 'Layout'
+    iconlib:
+      type: string
+    remove_button_labels:
+      type: boolean
+    disable_edit_json:
+      type: boolean
+    disable_properties:
+      type: boolean
+    no_additional_properties:
+      type: boolean

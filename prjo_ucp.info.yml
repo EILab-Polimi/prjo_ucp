@@ -1,0 +1,5 @@
+name: 'ProjectO '
+type: module
+description: 'Main module for ProjectO UCP'
+core: 8.x
+package: 'Custom'

@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_application_field_txn
+    - node.type.technology_product
+    - taxonomy.vocabulary.water_application_field
+id: node.technology_product.field_application_field_txn
+field_name: field_application_field_txn
+entity_type: node
+bundle: technology_product
+label: 'Application field'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      water_application_field: water_application_field
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

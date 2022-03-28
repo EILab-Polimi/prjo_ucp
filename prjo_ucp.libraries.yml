@@ -1,0 +1,63 @@
+
+commands:
+  version: 1.x
+  js:
+    js/commands.js: {}
+  dependencies:
+     - core/drupal.ajax
+
+
+leaflet:
+  version: 1.7.1
+  remote: https://github.com/Leaflet/Leaflet
+  license:
+    name: MIT
+    url: https://github.com/Leaflet/Leaflet/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/leaflet/leaflet.js: {}
+  css:
+    theme:
+      /libraries/leaflet/leaflet.css: {}
+
+leafletMarkerCluster:
+  version: 1.4.1
+  remote: https://github.com/Leaflet/Leaflet.markercluster
+  license:
+    name: MIT
+    url: https://github.com/Leaflet/Leaflet.markercluster#license
+    gpl-compatible: true
+  js:
+    /libraries/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js: {}
+  css:
+    theme:
+      /libraries/Leaflet.markercluster-1.4.1/dist/MarkerCluster.Default.css: {}
+
+
+waterViewMap:
+  version: 1.x
+  js:
+    js/LIcons.js: {}
+    js/waterViewMap.js: {}
+
+wicket:
+  version: 1.3.8
+  remote: https://github.com/arthur-e/Wicket
+  license:
+    name: MIT
+    url: https://github.com/arthur-e/Wicket#license
+    gpl-compatible: true
+  js:
+    /libraries/Wicket/wicket.js: {}
+    /libraries/Wicket/wicket-leaflet.js: {}
+
+waterNodesViewMap:
+  version: 1.x
+  js:
+    js/LIcons.js: {}
+    js/water_nodesViewMap.js: {}
+
+waterRequestViewAnSpec:
+  version: 1.x
+  js:
+    js/water_reqViewAnSpec.js: {}

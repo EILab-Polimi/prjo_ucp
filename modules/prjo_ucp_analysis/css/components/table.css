@@ -1,0 +1,36 @@
+/* Changing the background of the inputfield */
+/*
+[data-schemapath$='min'] h3 {
+  display: none !important;
+}
+
+[data-schemapath$='max'] h3 {
+  display: none !important;
+} */
+
+/* [data-schemapath$='effluent.min'] h3 {
+  display: none !important;
+}
+
+[data-schemapath$='effluent.max'] h3 {
+  display: none !important;
+}
+
+[data-schemapath$='influent.min'] h3 {
+  background: red;
+  display: none;
+} */
+
+/* set elements inside td vertically aligned middle*/
+.table td.compact {
+  vertical-align: middle;
+}
+
+tr td:last-child {
+  vertical-align: middle;
+}
+
+/* Example how to get id element with square brackets */
+/* #root\[0\]\[uom\] {
+  background: purple;
+} */

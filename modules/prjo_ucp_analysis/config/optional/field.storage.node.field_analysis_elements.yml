@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - jsonb
+    - node
+id: node.field_analysis_elements
+field_name: field_analysis_elements
+entity_type: node
+type: jsonb
+settings: {  }
+module: jsonb
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_units_of_measure
+    - node.type.units_of_measure
+  module:
+    - jsonb
+id: node.units_of_measure.field_units_of_measure
+field_name: field_units_of_measure
+entity_type: node
+bundle: units_of_measure
+label: 'Units of measure'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: jsonb

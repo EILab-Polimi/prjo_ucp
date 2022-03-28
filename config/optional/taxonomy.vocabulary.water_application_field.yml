@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Water application field'
+vid: water_application_field
+description: 'The macro application field the water would be used for'
+weight: 0

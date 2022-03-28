@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.observed_property.body
+    - field.field.node.observed_property.field_observed_property
+    - node.type.observed_property
+  module:
+    - jsonb
+    - text
+    - user
+id: node.observed_property.default
+targetEntityType: node
+bundle: observed_property
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_observed_property:
+    weight: 102
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: jsonb_default
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

@@ -1,0 +1,13 @@
+name: 'ProjectO Water loop'
+type: module
+description: 'Water loop for ProjectO UCP'
+core: 8.x
+package: Custom
+dependencies:
+  - menu_ui
+  - address
+  - entity_reference_views_table
+  - image
+  - node
+  - prjo_ucp_waterloop
+  - user

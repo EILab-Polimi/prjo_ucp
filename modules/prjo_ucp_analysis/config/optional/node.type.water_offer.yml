@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Water Offer'
+type: water_offer
+description: "Add a Water Offer that can be viewed by people inside groups of type <em>Water User</em>.\r\nPeople that belong to a group of type <em>Water Stream Provider</em> can create this kind of content."
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false
