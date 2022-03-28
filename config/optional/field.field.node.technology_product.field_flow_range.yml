@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_flow_range
+    - node.type.technology_product
+  module:
+    - range
+id: node.technology_product.field_flow_range
+field_name: field_flow_range
+entity_type: node
+bundle: technology_product
+label: 'Flow range'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  field:
+    prefix: ''
+    suffix: ''
+  from:
+    prefix: ''
+    suffix: m³/day
+  to:
+    prefix: ''
+    suffix: m³/day
+  combined:
+    prefix: ''
+    suffix: ''
+field_type: range_float

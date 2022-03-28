@@ -1,0 +1,86 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.observed_property.body
+    - field.field.node.observed_property.field_observed_property
+    - node.type.observed_property
+  module:
+    - path
+    - prjo_ucp_analysis
+    - text
+id: node.observed_property.default
+targetEntityType: node
+bundle: observed_property
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 121
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
+    region: content
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_observed_property:
+    weight: 122
+    settings:
+      schema: "{\"type\": \"array\",\r\n \"format\": \"table\",\r\n \"title\": \"Observed Properties List\",\r\n \"items\": {\"type\": \"object\",\r\n           \"properties\": {\r\n           \"observed property\": {\"type\": \"array\",\r\n                     \"format\": \"table\",\r\n                     \"items\": {\r\n                              \"type\": \"object\",\r\n                              \"properties\": {\r\n                                \"language\": {\"type\": \"string\",\r\n                                  \"$ref\": \"http://local.d8mapping.it/api/json/i18n\"\r\n                                },\r\n                                \"label\": {\"type\": \"string\"}\r\n                              }\r\n                    }\r\n           },\r\n           \"property\": {\r\n                \"type\": \"string\"\r\n           },\r\n           \"uom\": {\r\n                \"type\": \"string\",\r\n                \"$ref\": \"http://local.d8mapping.it/api/json/uom\"}\r\n           }\r\n  }\r\n}\r\n"
+      showJson: false
+    third_party_settings: {  }
+    type: analysis_field_widget
+    region: content
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    region: content
+    third_party_settings: {  }
+hidden: {  }

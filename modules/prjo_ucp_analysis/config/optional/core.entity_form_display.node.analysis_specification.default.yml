@@ -1,0 +1,91 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.analysis_specification.field_analysis_elements
+    - field.field.node.analysis_specification.field_country
+    - field.field.node.analysis_specification.field_law
+    - node.type.analysis_specification
+  module:
+    - address
+    - path
+    - prjo_ucp_analysis
+id: node.analysis_specification.default
+targetEntityType: node
+bundle: analysis_specification
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_analysis_elements:
+    weight: 9
+    settings:
+      schema: "{\r\n  \"type\": \"array\",\r\n  \"format\": \"table\",\r\n  \"title\": \"Analysis Specification\",\r\n  \"uniqueItems\": true,\r\n  \"items\": {\"type\": \"object\",\r\n            \"properties\": {\r\n              \"observed property\": {\r\n                 \"type\": \"string\",\r\n                 \"$ref\": \"http://local.d8mapping.it/api/json/obsp\"\r\n              },\r\n              \"uom\": {\r\n                 \"type\": \"string\",\r\n                 \"$ref\": \"http://local.d8mapping.it/api/json/uom\",\r\n                  \"default\": \"[pH]\"\r\n               },\r\n               \"limits\": {\r\n                  \"type\" : \"object\",\r\n                  \"format\": \"grid-strict\",\r\n                  \"properties\": {\r\n                                \"minimum\": {\"type\": \"number\",\"options\": {\r\n        \"grid_columns\": 3\r\n      }},\r\n                                \"exclusiveMinimum\": {\"type\": \"boolean\",\"options\": {\r\n        \"grid_columns\": 3\r\n      }},\r\n                                \"maximum\": {\"type\": \"number\", \"options\": {\r\n        \"grid_columns\": 3\r\n      }},                                \r\n                                \"exclusiveMaximum\": {\"type\": \"boolean\",\"options\": {\r\n        \"grid_columns\": 3\r\n      }}\r\n                              }\r\n             }\r\n   }\r\n}\r\n}"
+      showJson: false
+    third_party_settings: {  }
+    type: analysis_field_widget
+    region: content
+  field_country:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: address_country_default
+    region: content
+  field_law:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  path:
+    type: path
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 3
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 6
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 4
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 1
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    region: content
+    third_party_settings: {  }
+hidden: {  }

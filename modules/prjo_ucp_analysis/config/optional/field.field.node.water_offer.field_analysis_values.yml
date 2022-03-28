@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_analysis_values
+    - node.type.water_offer
+  module:
+    - jsonb
+id: node.water_offer.field_analysis_values
+field_name: field_analysis_values
+entity_type: node
+bundle: water_offer
+label: 'Analysis values'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: jsonb

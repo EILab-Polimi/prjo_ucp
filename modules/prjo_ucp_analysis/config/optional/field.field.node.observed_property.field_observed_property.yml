@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_observed_property
+    - node.type.observed_property
+  module:
+    - jsonb
+id: node.observed_property.field_observed_property
+field_name: field_observed_property
+entity_type: node
+bundle: observed_property
+label: 'observed property'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: jsonb

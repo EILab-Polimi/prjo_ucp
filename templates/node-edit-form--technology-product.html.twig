@@ -1,0 +1,144 @@
+{#
+/**
+ * @file
+ * Theme override for a 'form' element.
+ *
+ * Available variables
+ * - attributes: A list of HTML attributes for the wrapper element.
+ * - children: The child elements of the form.
+ *
+ * @see template_preprocess_form()
+ */
+#}
+
+{# {{ form }} #}
+
+{# {{ form|without('advanced', 'footer', 'actions') }} #}
+
+{{ form.form_build_id }}
+{{ form.form_token }}
+{{ form.form_id }}
+
+
+{# {{ kint(form) }} #}
+
+<div class="row mb-3">
+  <div class="col-lg-12">
+      <div class="row">
+          <div class="col">
+              <div class="card shadow mb-3">
+                  <div class="card-header py-3">
+                      <p class="text-primary m-0 font-weight-bold">Water Technology qualification</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                              {{ form.title }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                              <!-- <label for="username"><strong>Estimated Flow m3/day needed *</strong></label>
+                              <input class="form-control" type="text" placeholder="flow in m3/day" name="username"> -->
+                              {{ form.check_application_field }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                              {{ form.field_application_field_txn }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                              <!-- <label for="username"><strong>Estimated Flow m3/day needed *</strong></label>
+                              <input class="form-control" type="text" placeholder="flow in m3/day" name="username"> -->
+                              {{ form.check_tech_domain }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                              {{ form.field_technology_domain_txn }}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-row">
+                        <div class="col">
+                            <p class="m-0 font-weight-bold">Flow range [m<sup>3</sup>/day]</p>
+                            <div class="form-group">
+                              {{ form.field_flow_range }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                              {{ form.body }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                              {{ form.field_technology_specifications }}
+                            </div>
+                        </div>
+                    </div>
+
+                  </div>
+              </div>
+              <div class="card shadow">
+                  <div class="card-header py-3">
+                      <p class="text-primary m-0 font-weight-bold">Costs estimation</p>
+                  </div>
+                  <div class="card-body py-3">
+                      <p class="text-primary m-0 font-weight-bold">Investment costs (CAPEX) &euro;/year</p>
+                      <div class="form-group">
+                        {{ form.field_ic_capex }}
+                      </div>
+                  </div>
+                  <hr>
+                  <div class="card-body py-3">
+                      <p class="text-primary m-0 font-weight-bold">Consumption-linked expenses (OPEX) &euro;/year</p>
+                      <div class="form-group">
+                        {{ form.field_cle_opex }}
+                      </div>
+                  </div>
+                  <hr>
+                  <div class="card-body py-3">
+                      <p class="text-primary m-0 font-weight-bold">Operation and administrative-linked expenses (OPEX) &euro;/year</p>
+                      <div class="form-group">
+                        {{ form.	field_oale_opex }}
+                      </div>
+                  </div>
+
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- <div class="col-lg-4">
+      <div class="card mb-3"></div>
+      <div class="card shadow mb-4">
+          <div class="card-header py-3">
+              <h6 class="text-primary font-weight-bold m-0">Have you required water specs ?</h6>
+          </div><textarea rows="30" name="signature" placeholder="Write here any known details about chemical specs of the water" cols="20"></textarea>
+      </div>
+  </div> -->
+  <div class="col-xl-12">
+    {{ form.footer }}
+    {{ form.actions }}
+  </div>
+</div>

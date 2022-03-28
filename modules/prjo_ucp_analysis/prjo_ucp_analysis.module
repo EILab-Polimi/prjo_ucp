@@ -1,0 +1,193 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\InvokeCommand;
+
+// node-water-offer-edit-form -- only for edit existing nodes
+// node-water-offer-form -- only for create new nodes
+
+// Foreach node edit and create - of water_offer type
+function prjo_ucp_analysis_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $node = $form_state->getFormObject()->getEntity();
+
+  // Water offer edit
+  if ($node->getType() == 'water_offer') {
+    // Set global variables
+    $storage = \Drupal::service('entity_type.manager')->getStorage('node');
+
+    // Attach javascript functionalities for ajax command
+    $form['#attached']['library'][] = "prjo_ucp_analysis/commands";
+
+    // See example here https://gist.github.com/jez500/3402ef2723e51fa78ac759918e0906bb
+    // When operating on an NON custom form the ajax has to attached to the widget
+    $form['field_application_field_txn']['widget']['#ajax'] = [
+      'callback' => 'waterOfferAnalysisCallback',
+      'event' => 'change',
+    ];
+
+    // When the AJAX request comes in, or when the user hit 'Submit' if there is
+    // no JavaScript, the form state will tell us what the user has selected
+    // from the dropdown. We can look at the value of the dropdown to determine
+    // which analysis load.
+    $selected_fieldset = $form_state->getValue('field_application_field_txn');
+  }
+
+  // Water request edit
+  if ($node->getType() == 'water_request') {
+    // Set global variables
+    $storage = \Drupal::service('entity_type.manager')->getStorage('node');
+
+    // Since the form hasnot been submitted get the value from $form
+    $selected_fieldset = $form['field_application_field_txn']['widget']['#default_value'];
+
+    // kint($form_state->getFormObject()->getEntity());
+    // kint($form['field_application_field_txn']['widget']['#default_value'][0]);
+
+    $an_spec_entity_ids = $storage->getQuery()
+      ->condition('type', 'analysis_specification')
+      ->condition('status', 1)
+      ->condition('field_application_field_txn', $selected_fieldset[0])
+      ->execute();
+
+    $an_spec_entities = $storage->loadMultiple(array_values($an_spec_entity_ids));
+
+    foreach ($an_spec_entities as $key => $value) {
+      $field = $value->get('field_analysis_elements')->getValue();
+      // dpm($field);
+    }
+
+    // Get Analysis template from selected analysis specification
+    $spec = Json::decode($field[0]['value']);
+
+    // Attach javascript functionalities for ajax command
+    $form['#attached'] = [
+            'library' => ["prjo_ucp_analysis/commands",
+                          "prjo_ucp/waterRequestViewAnSpec"
+                          ],
+           'drupalSettings' => [
+             'spec' => $spec,
+           ]
+         ];
+
+    // See example here https://gist.github.com/jez500/3402ef2723e51fa78ac759918e0906bb
+    // When operating on an NON custom form the ajax has to attached to the widget
+    $form['field_application_field_txn']['widget']['#ajax'] = [
+      'callback' => 'waterRequestAnalysisCallback',
+      'event' => 'change',
+    ];
+
+    // When the AJAX request comes in, or when the user hit 'Submit' if there is
+    // no JavaScript, the form state will tell us what the user has selected
+    // from the dropdown. We can look at the value of the dropdown to determine
+    // which analysis load.
+    $selected_fieldset = $form_state->getValue('field_application_field_txn');
+  }
+
+  // Technolgy edit
+  if ($node->getType() == 'technology_product') {
+    $form['#attached']['library'][] = 'prjo_ucp_analysis/TPtablecss';
+  }
+}
+
+/**
+* Handles switching the analysis_fieldset region based on the selected analysis_type_select.
+*/
+
+function waterRequestAnalysisCallback(array $form, FormStateInterface $form_state) {
+
+  $storage = \Drupal::service('entity_type.manager')->getStorage('node');
+  $host = \Drupal::request()->getSchemeAndHttpHost();
+
+  // Get the target_id
+
+  // $json = $form_state->getValue('field_application_field_txn');
+  // $json = $form_state->getValue('argument');
+  $selected_fieldset = $form_state->getValue('field_application_field_txn');
+  $an_spec_entity_ids = $storage->getQuery()
+    ->condition('type', 'analysis_specification')
+    ->condition('status', 1)
+    ->condition('field_application_field_txn', $selected_fieldset[0]['target_id'])
+    ->execute();
+
+  $an_spec_entities = $storage->loadMultiple(array_values($an_spec_entity_ids));
+
+  foreach ($an_spec_entities as $key => $value) {
+    $field = $value->get('field_analysis_elements')->getValue();
+    // dpm($field);
+  }
+
+  // Get Analysis template from selected analysis specification
+  $data = Json::decode($field[0]['value']);
+  // Convert machine names to human names
+  // mapping enum values to enum titles to be shown
+  // $uom = file_get_contents($host."/api/json/uom");
+  // $uomData = Json::decode($uom);
+  //
+  // $obs = file_get_contents($host."/api/json/obsp");
+  // $obsData = Json::decode($obs);
+
+  // foreach ($data as $key => $value) {
+  //   unset($data[$key]['limits']);
+  //   // kint($data[$key]);
+  //   // $obs_key = array_search ($data[$key]["observed property"], $obsData["enum"]);
+  //   // $uom_key = array_search ($data[$key]["uom"], $uomData["enum"]);
+  //   // $data[$key]["observed_property"] = $obsData["options"]["enum_titles"][$obs_key];
+  //   // $data[$key]["uom"] = $uomData["options"]["enum_titles"][$uom_key];
+  // }
+
+  $response = new AjaxResponse();
+  $response->addCommand(new InvokeCommand(NULL, 'wrAjaxCallback', [$data]));
+  return $response;
+}
+
+
+// https://www.drupal.org/docs/drupal-apis/javascript-api/ajax-forms#s-execute-custom-javascript-in-an-ajax-callback
+function waterOfferAnalysisCallback(array $form, FormStateInterface $form_state) {
+
+  $storage = \Drupal::service('entity_type.manager')->getStorage('node');
+  // $host = \Drupal::request()->getSchemeAndHttpHost();
+
+  // Get the target_id
+
+  $json = $form_state->getValue('field_application_field_txn');
+  // $json = $form_state->getValue('argument');
+  $selected_fieldset = $form_state->getValue('field_application_field_txn');
+  $an_spec_entity_ids = $storage->getQuery()
+    ->condition('type', 'analysis_specification')
+    ->condition('status', 1)
+    ->condition('field_application_field_txn', $selected_fieldset[0]['target_id'])
+    ->execute();
+
+  $an_spec_entities = $storage->loadMultiple(array_values($an_spec_entity_ids));
+
+  foreach ($an_spec_entities as $key => $value) {
+    $field = $value->get('field_analysis_elements')->getValue();
+    // dpm($field);
+  }
+
+  // Get Analysis template from selected analysis specification
+  $data = Json::decode($field[0]['value']);
+  // Convert machine names to human names
+  // mapping enum values to enum titles to be shown
+  // $uom = file_get_contents($host."/api/json/uom");
+  // $uomData = Json::decode($uom);
+  //
+  // $obs = file_get_contents($host."/api/json/obsp");
+  // $obsData = Json::decode($obs);
+
+  foreach ($data as $key => $value) {
+    unset($data[$key]['limits']);
+    // kint($data[$key]);
+    // $obs_key = array_search ($data[$key]["observed property"], $obsData["enum"]);
+    // $uom_key = array_search ($data[$key]["uom"], $uomData["enum"]);
+    // $data[$key]["observed_property"] = $obsData["options"]["enum_titles"][$obs_key];
+    // $data[$key]["uom"] = $uomData["options"]["enum_titles"][$uom_key];
+  }
+
+  $response = new AjaxResponse();
+  $response->addCommand(new InvokeCommand(NULL, 'woAjaxCallback', [$data]));
+  return $response;
+}

@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Technology Product'
+type: technology_product
+description: "<em>Technology Provider Group</em> can add this content.\r\nDefine the <em>Technology Product Roles</em> the product is performing using the <em>Implements Technology Components</em> slot - multiple node reference to <em>Technology Components</em>"
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

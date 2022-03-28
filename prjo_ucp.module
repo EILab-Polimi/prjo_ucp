@@ -1,0 +1,341 @@
+<?php
+
+/**
+ * @file
+ * Contains prjo_ucp.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity\Node;
+use Drupal\Component\Serialization\Json as Json;
+
+
+/**
+ * Implements hook_help().
+ */
+function prjo_ucp_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the prjo_ucp module.
+    case 'help.page.prjo_ucp':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Main module for ProjectO') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+* Implements hook_theme().
+*/
+function prjo_ucp_theme() {
+ return [
+   'dashboard' => [
+     'variables' => ['username'=> NULL, 'cards' => NULL, 'wl' => NULL],
+   ],
+   'node__water_offer' => [
+     'base hook' => 'node',
+   ],
+   'node__water_request' => [
+     'base hook' => 'node',
+   ],
+   'node__technology_product' => [
+     'base hook' => 'node',
+   ],
+   'node__water_loop' => [
+     'base hook' => 'node',
+   ],
+   'node_edit_form__water_offer' => [
+      'render element' => 'form',
+      'template' => 'node-edit-form--water-offer',
+    ],
+  'node_edit_form__water_request' => [
+     'render element' => 'form',
+     'template' => 'node-edit-form--water-request',
+   ],
+  'node_edit_form__technology_product' => [
+      'render element' => 'form',
+      'template' => 'node-edit-form--technology-product',
+    ],
+    'node_edit_form__water_loop' => [
+        'render element' => 'form',
+        'template' => 'node-edit-form--water-loop',
+      ],
+ ];
+}
+
+// Use the Redirect After Login module
+// https://www.drupal.org/node/683696
+// function prjo_ucp_user_login_submit(&$form, FormStateInterface $form_state) {
+//   $url = Url::fromRoute('prjo_ucp.dashboard');
+//
+//   // Check if a destination was set, probably on an exception controller.
+//   // @see \Drupal\user\Form\UserLoginForm::submitForm()
+//   $request = \Drupal::service('request_stack')->getCurrentRequest();
+//   if (!$request->request->has('destination')) {
+//     $form_state->setRedirectUrl($url);
+//   }
+//   else {
+//     $request->query->set('destination', $request->request->get('destination'));
+//   }
+// }
+
+function prjo_ucp_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // dpm($form_id);
+}
+
+/**
+ * Implements hook_preprocess_node().
+                        VIEW
+ New implementation of water_request && water_offer map visualization
+ mix with the use of field plugin to inject the correct analysis_specification
+ */
+function prjo_ucp_preprocess_node(&$variables) {
+  // Add javascript to implement leaflet map in view with correct markers
+  if ($variables['node']->getType() === 'water_request') {
+    $storage = \Drupal::service('entity_type.manager')->getStorage('node');
+    $selected_fieldset = $variables['node']->field_application_field_txn->getValue();
+    $an_spec_entity_ids = $storage->getQuery()
+      ->condition('type', 'analysis_specification')
+      ->condition('status', 1)
+      ->condition('field_application_field_txn', $selected_fieldset[0]['target_id'])
+      ->execute();
+
+    $an_spec_entities = $storage->loadMultiple($an_spec_entity_ids);
+
+    foreach ($an_spec_entities as $key => $value) {
+      $field = $value->get('field_analysis_elements')->getValue();
+      // dpm($field);
+    }
+
+    // Get Analysis template from selected analysis specification
+    $spec = Json::decode($field[0]['value']);
+
+
+    $variables['#attached'] = [
+                'library' => [ "prjo_ucp/leaflet",
+                               "prjo_ucp/wicket",
+                               "prjo_ucp/waterNodesViewMap",
+                               "prjo_ucp/waterRequestViewAnSpec"
+                             ],
+              'drupalSettings' => [
+                'nodetype' => 'WR',
+                'point' => $variables['node']->field_water_stream_position->getValue(),
+                'application_field' => $variables['node']->field_application_field_txn->getValue(),
+                'spec' => $spec,
+              ]
+            ];
+
+  }
+  if ($variables['node']->getType() === 'water_offer') {
+    // TODO: this is for inject custom leflet map functionalities - use field plugin instead
+    $storage = \Drupal::service('entity_type.manager')->getStorage('node');
+    $selected_fieldset = $variables['node']->field_application_field_txn->getValue();
+    $an_spec_entity_ids = $storage->getQuery()
+      ->condition('type', 'analysis_specification')
+      ->condition('status', 1)
+      ->condition('field_application_field_txn', $selected_fieldset[0]['target_id'])
+      ->execute();
+
+    $an_spec_entities = $storage->loadMultiple($an_spec_entity_ids);
+
+    foreach ($an_spec_entities as $key => $value) {
+      $field = $value->get('field_analysis_elements')->getValue();
+      // dpm($field);
+    }
+
+    // Get Analysis template from selected analysis specification
+    $spec = Json::decode($field[0]['value']);
+
+
+    $variables['#attached'] = [
+                'library' => [ "prjo_ucp/leaflet",
+                               "prjo_ucp/wicket",
+                               "prjo_ucp/waterNodesViewMap"
+                             ],
+              'drupalSettings' => [
+                'nodetype' => 'WS',
+                'point' => $variables['node']->field_water_stream_position->getValue(),
+                'application_field' => $variables['node']->field_application_field_txn->getValue(),
+                'spec' => $spec,
+              ]
+            ];
+  }
+
+}
+
+/**
+            Alter forms
+ */
+// use hook_form_node_water_request_edit_form_alter for existing nodes
+function prjo_ucp_form_node_water_request_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // kint($form['actions']);
+  $form['actions']['cancel']['#attributes'] = array('class' => array('btn-sm'));
+  $form['actions']['submit']['#attributes'] = array('class' => array('btn-sm'));
+  $form['actions']['preview']['#attributes'] = array('class' => array('btn-sm'));
+}
+
+function prjo_ucp_form_node_water_request_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // kint($form['actions']);
+  $form['actions']['cancel']['#attributes'] = array('class' => array('btn-sm'));
+  $form['actions']['submit']['#attributes'] = array('class' => array('btn-sm'));
+  $form['actions']['preview']['#attributes'] = array('class' => array('btn-sm'));
+}
+
+function prjo_ucp_form_node_water_offer_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // dpm($form['field_additional_info']);
+
+  // Unset title for documents and images card.
+  // TODO use the original title in template for card header
+  $form['field_images']['widget']['#title'] = '';
+  $form['field_documents']['widget']['#title'] = '';
+
+  $form['field_additional_info']['widget'][0]['#title'] = '';
+
+  $form['actions']['cancel']['#attributes'] = array('class' => array('btn-sm'));
+  $form['actions']['submit']['#attributes'] = array('class' => array('btn-sm'));
+  $form['actions']['preview']['#attributes'] = array('class' => array('btn-sm'));
+
+  $form['actions']['submit']['#submit'][] = 'mymodule_form_submit';
+}
+
+function mymodule_form_submit(array $form, FormStateInterface $form_state){
+    //die("why won't this execute? :(");
+    drupal_set_message("Why won't this message show?");
+    drupal_set_message("<pre>".print_r($form_sate,TRUE)."</pre>");
+}
+
+function prjo_ucp_form_node_water_offer_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // dpm($form['field_images']);
+
+  // Unset title for documents and images card.
+  // TODO use the original title in template for card header
+  $form['field_images']['widget']['#title'] = '';
+  $form['field_documents']['widget']['#title'] = '';
+
+  $form['field_additional_info']['widget'][0]['#title'] = '';
+
+  $form['actions']['cancel']['#attributes'] = array('class' => array('btn-sm'));
+  $form['actions']['submit']['#attributes'] = array('class' => array('btn-sm'));
+  $form['actions']['preview']['#attributes'] = array('class' => array('btn-sm'));
+}
+
+// Technology product form
+// node-technology-product-edit-form -- only for edit existing nodes
+// node-technology-product-form -- only for create new nodes
+function prjo_ucp_form_node_technology_product_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+// function prjo_ucp_form_node_technology_product_form_alter(&$form, $form_state) {
+
+  $form['actions']['cancel']['#attributes'] = array('class' => array('btn-sm'));
+  $form['actions']['submit']['#attributes'] = array('class' => array('btn-sm'));
+  $form['actions']['preview']['#attributes'] = array('class' => array('btn-sm'));
+
+// Attach javascript functionalities
+  $form['#attached']['library'][] = "prjo_ucp/commands";
+
+// Set placeholders
+  // dpm($form['title']);
+  // for this settings we need to go to the textbox element inside the form
+  // the textbox element is inside the widget if the display used is of type textbox
+
+  // TITLE field
+  // $form['title']['widget'][0]['value']['#title'] = 'Technology short name';
+  // $form['title']['widget'][0]['value']['#title_display'] = 'invisible';
+  $form['title']['widget'][0]['value']['#attributes']['placeholder'] = t('specify name to show for this treatment');
+  // $form['title']['widget'][0]['value']['#attributes']['placeholder'][] = t('specify name to show for this treatment');
+
+// Set selectboxes hidden by default
+  $form['field_application_field_txn']['#attributes'] = array('style' => array('display: none;'));
+  $form['field_technology_domain_txn']['#attributes'] = array('style' => array('display: none;'));
+
+  // change title for application field in edit/create
+  $form['field_application_field_txn']['widget']['#title'] = t('Select application field');
+// Dependent checkbox
+  // Add fake input checkboxes to show hyde selectboxes
+  $form['check_application_field'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Your technology best apply to a specific field? (INPUT STREAM)'),
+  );
+  // $form['check_tech_domain'] = array(
+  //   '#type' => 'checkbox',
+  //   '#title' => t('Technology fits a specific domain?'),
+  // );
+
+  $form['field_flow_range']['widget'][0]['#title'] = '';
+  $form['field_flow_range']['widget'][0]['to']['#field_suffix'] = '';
+  // Remove title for echonomics Fields
+  // print_r($form['field_ic_capex']['widget']);
+  $form['field_ic_capex']['widget'][0]['#title'] = '';
+  $form['field_cle_opex']['widget'][0]['#title'] = '';
+  $form['field_oale_opex']['widget'][0]['#title'] = '';
+
+
+}
+
+function prjo_ucp_form_node_technology_product_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+// function prjo_ucp_form_node_technology_product_form_alter(&$form, $form_state) {
+
+  $form['actions']['cancel']['#attributes'] = array('class' => array('btn-sm'));
+  $form['actions']['submit']['#attributes'] = array('class' => array('btn-sm'));
+  $form['actions']['preview']['#attributes'] = array('class' => array('btn-sm'));
+
+  // print_r($form['field_flow_range']['widget']);
+  // print_r($form['field_flow_range']['widget'][0]['to']['#field_suffix']);
+  $form['field_flow_range']['widget'][0]['#title'] = '';
+  $form['field_flow_range']['widget'][0]['to']['#field_suffix'] = '';
+  // Remove title for echonomics Fields
+  // print_r($form['field_ic_capex']['widget']);
+  $form['field_ic_capex']['widget'][0]['#title'] = '';
+  $form['field_cle_opex']['widget'][0]['#title'] = '';
+  $form['field_oale_opex']['widget'][0]['#title'] = '';
+
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+// function prjo_ucp_entity_type_alter(array &$entity_types) {
+//   $entity_types['user']->setFormClass('register', '\Drupal\prjo_ucp\Form\MultiStepRegistrationEntityForm');
+// }
+
+/**
+ * Implements hook_node_insert().
+ */
+function prjo_ucp_node_insert(Node $node) {
+
+  if($node->bundle() == 'water_loop'){
+
+  // Set Flag for interested users
+  // https://drupal.stackexchange.com/questions/222941/how-can-i-flag-content-programmatically
+  // $account = \Drupal::currentUser(); // load a specific user
+
+  // Get a list of accounts
+    $userStorage = \Drupal::entityTypeManager()->getStorage('user');
+
+    $query = $userStorage->getQuery();
+    $uids = $query
+      ->condition('status', '1')
+      // ->condition('roles', 'moderator')
+      ->execute();
+
+    $users = $userStorage->loadMultiple($uids);
+
+    $flag_service = \Drupal::service('flag');
+    $flag = $flag_service->getFlagById('water'); // replace by flag machine name
+
+
+    foreach ($users as $key => $account) {
+      // check if already flagged
+      $flagging = $flag_service->getFlagging($flag, $node, $account);
+      if (!$flagging) {
+        $flag_service->flag($flag, $node, $account);
+      }
+      else {
+        $flag_service->unflag($flag, $node, $account);
+      }
+    }
+  }
+
+}

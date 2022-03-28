@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.analysis_specification.field_analysis_elements
+    - field.field.node.analysis_specification.field_country
+    - field.field.node.analysis_specification.field_law
+    - node.type.analysis_specification
+  module:
+    - user
+id: node.analysis_specification.teaser
+targetEntityType: node
+bundle: analysis_specification
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_analysis_elements: true
+  field_country: true
+  field_law: true

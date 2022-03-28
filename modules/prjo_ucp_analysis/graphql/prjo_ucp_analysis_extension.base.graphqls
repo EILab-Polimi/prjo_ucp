@@ -1,0 +1,17 @@
+scalar Violation
+
+type UOM {
+  id: Int!
+  title: String!
+  author: String
+  jsonb: String
+}
+
+type UOMResponse implements Response {
+  errors: [Violation]
+  units_of_measure: UOM
+}
+
+interface Response {
+  errors: [Violation]
+}

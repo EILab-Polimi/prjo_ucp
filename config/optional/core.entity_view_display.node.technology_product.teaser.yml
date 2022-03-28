@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.technology_product.body
+    - field.field.node.technology_product.field_application_field_txn
+    - field.field.node.technology_product.field_flow_range
+    - field.field.node.technology_product.field_technology_domain_txn
+    - node.type.technology_product
+  module:
+    - text
+    - user
+id: node.technology_product.teaser
+targetEntityType: node
+bundle: technology_product
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_application_field_txn: true
+  field_flow_range: true
+  field_technology_domain_txn: true

@@ -1,0 +1,45 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.analysis_specification.field_analysis_elements
+    - field.field.node.analysis_specification.field_country
+    - field.field.node.analysis_specification.field_law
+    - node.type.analysis_specification
+  module:
+    - address
+    - jsonb
+    - user
+id: node.analysis_specification.default
+targetEntityType: node
+bundle: analysis_specification
+mode: default
+content:
+  field_analysis_elements:
+    weight: 3
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: jsonb_default
+    region: content
+  field_country:
+    weight: 1
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: address_country_default
+    region: content
+  field_law:
+    weight: 2
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

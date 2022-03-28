@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_law
+    - node.type.analysis_specification
+id: node.analysis_specification.field_law
+field_name: field_law
+entity_type: node
+bundle: analysis_specification
+label: Law
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

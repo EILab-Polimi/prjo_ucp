@@ -1,0 +1,78 @@
+
+.ws-icon {
+  width:200px;
+  background-color: white;
+}
+
+.ic_water_distribution {
+  background: url(icons/ic_water_distribution.png) left top no-repeat; /* << WORKS FINE! */
+  background-size: contain;
+}
+
+.marker-flow {
+  font-weight: bold;
+}
+
+/* .myDivIcon {
+
+}
+
+.myDivIcon:before, .myDivIcon:after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 20px;
+    top: 0px;
+    background-image: radial-gradient(circle at top, blue 5px, transparent 5px);
+    background-size: 20px 20px;
+    background-position: top center, bottom center;
+    background-repeat: no-repeat;
+}
+
+.myDivIcon:before {
+    left: 0px;
+}
+.myDivIcon:after {
+    right: 0px;
+} */
+
+caption {
+  caption-side:top !important;
+}
+
+.legend {
+  background-color: white;
+}
+
+/* Form action submit float right */
+
+#edit-actions{
+  text-align:right;
+}
+
+label.error {
+   color: red!important;
+}
+
+
+.progress-sign-left {
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    line-height: 0;
+    font-size: 0.75rem;
+    background-color: #eaecf4;
+    border-radius: 0.35rem 0 0 0.35rem;
+}
+
+.progress-sign-right {
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    line-height: 0;
+    font-size: 0.75rem;
+    background-color: #eaecf4;
+    border-radius: 0 0.35rem 0.35rem 0;
+    border-left-color: black;
+    border-left: 1px solid;
+}

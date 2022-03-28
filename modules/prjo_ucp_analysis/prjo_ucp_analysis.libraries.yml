@@ -1,0 +1,41 @@
+
+json-editor:
+  version: 2.5.3
+  header: true
+  js:
+    /libraries/json-editor/jsoneditor.js: {}
+
+InitJsonEditor:
+  version: 1.x
+  js:
+    js/init.js: {}
+
+commands:
+  version: 1.x
+  js:
+    js/commands.js: {}
+  dependencies:
+     - core/drupal.ajax
+
+mathjs:
+  version: 9.3.2
+  js:
+    /libraries/mathjs/math.js: {}
+
+plotly:
+  version: 1.58.4
+  js:
+    /libraries/plotlyjs/plotly-latest.min.js: {}
+
+InitMathjs:
+  version: 1.x
+  js:
+    js/initMathjs.js: {}
+
+TPtablecss:
+  version: 1.x
+  css:
+    component:
+      css/components/table.css: {}
+  # js:
+  #   js/table.js: {}

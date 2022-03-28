@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.water_offer.body
+    - field.field.node.water_offer.field_analysis_values
+    - node.type.water_offer
+  module:
+    - text
+    - user
+id: node.water_offer.default
+targetEntityType: node
+bundle: water_offer
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  flag_water:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  links:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_analysis_values: true

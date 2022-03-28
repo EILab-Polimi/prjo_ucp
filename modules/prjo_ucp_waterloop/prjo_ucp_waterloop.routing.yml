@@ -1,0 +1,43 @@
+# prjo_ucp_waterloop.notifications_callback:
+#   path: '/notify'
+#   defaults:
+#     _controller: 'Drupal\prjo_ucp_waterloop\Controller\WaterLoopNotifications::sendNotificaions'
+#   requirements:
+#     _permission: 'access content'
+
+
+projo_ucp_waterloop.applicationfields:
+  path: '/api/appfields'
+  defaults:
+    _controller: '\Drupal\prjo_ucp_waterloop\Controller\WaterLoopNotifications::getTerms'
+  requirements:
+    _permission: 'access content'
+
+
+projo_ucp_waterloop.analysis:
+  path: '/api/wsanalysis'
+  defaults:
+    _controller: '\Drupal\prjo_ucp_waterloop\Controller\WaterLoopNotifications::getWSAnalysis'
+  requirements:
+    _permission: 'access content'
+
+projo_ucp_waterloop.analysis_spec:
+  path: '/api/analysis_spec'
+  defaults:
+    _controller: '\Drupal\prjo_ucp_waterloop\Controller\WaterLoopNotifications::getAnalysisSpec'
+  requirements:
+    _permission: 'access content'
+
+projo_ucp_waterloop.technologies:
+  path: '/api/technology'
+  defaults:
+    _controller: '\Drupal\prjo_ucp_waterloop\Controller\WaterLoopNotifications::getTechnologies'
+  requirements:
+    _permission: 'access content'
+
+prjo_ucp_waterloop.save_wl:
+  path: '/api/save_wl'
+  defaults:
+    _controller: '\Drupal\prjo_ucp_waterloop\Controller\WaterLoopNotifications::saveWL'
+  requirements:
+    _permission: 'access content'

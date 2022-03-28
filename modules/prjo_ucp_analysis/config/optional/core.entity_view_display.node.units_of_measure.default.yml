@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.units_of_measure.body
+    - field.field.node.units_of_measure.field_units_of_measure
+    - node.type.units_of_measure
+  module:
+    - jsonb
+    - text
+    - user
+id: node.units_of_measure.default
+targetEntityType: node
+bundle: units_of_measure
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_units_of_measure:
+    weight: 102
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: jsonb_default
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }
